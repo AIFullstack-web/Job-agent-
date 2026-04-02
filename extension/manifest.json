@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Job Agent URL Pusher",
+  "version": "0.1.0",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Send Job URL"
+  }
+}
