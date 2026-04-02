@@ -1,0 +1,18 @@
+{
+  "owner_name": "Jane Candidate",
+  "experiences": [
+    {
+      "id": "exp_001",
+      "title": "Senior Software Engineer",
+      "company": "Acme Corp",
+      "years": 3.5,
+      "summary": "Built Python and FastAPI services for recruiting workflows and automation.",
+      "skills": ["Python", "FastAPI", "PostgreSQL", "Docker", "AWS"],
+      "evidence": [
+        "Reduced API latency by 38%",
+        "Delivered job-processing pipeline handling 1M events/day"
+      ],
+      "category": "work"
+    }
+  ]
+}
