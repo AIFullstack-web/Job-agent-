@@ -1,8 +1,10 @@
-# Autonomous Job Agent
+# Personal Job Agent
 
-A self-hosted Python agent for job discovery, matching, tailoring, and semi-autonomous application submission.
+A self-hosted Python agent for personal job discovery, matching, tailoring, and human-reviewed application submission.
 
-## Features completed
+The Experience Lake is the source of truth. Copy the example profile to a private file, replace the sample data, and keep that file out of version control.
+
+## Features
 
 - **Experience Lake**: local JSON profile source of truth + retrieval-ready document conversion.
 - **RAG layer**: local TF-IDF style index to ground resume and cover-letter generation.
@@ -12,7 +14,7 @@ A self-hosted Python agent for job discovery, matching, tailoring, and semi-auto
 - **Matcher**: computes a 1-5 match score, strengths alignment, and critical gaps.
 - **Tailoring agent**: creates grounded resume and cover letter snippets + structured fill plan.
 - **Workflow orchestration**: LangGraph pipeline with Discovery -> Scoring -> Tailoring -> Submission nodes.
-- **Stealth execution module**: SeleniumBase UC mode, CDP bridge for browser-use, human-like typing delays and captcha click hook.
+- **Browser execution module**: optional SeleniumBase UC mode, CDP bridge for browser-use, human-like typing delays and captcha click hook. Review generated fill plans before enabling browser submission.
 
 ## Directory structure
 
@@ -36,10 +38,25 @@ src/job_agent/
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -e .[dev]
+python -m pip install -e ".[dev]"
 pytest
-python -m job_agent.cli.run_agent
+job-agent
 ```
+
+For browser automation, install `python -m pip install -e ".[browser]"`. LLM packages are available with `python -m pip install -e ".[llm]"`.
+
+## Personal configuration
+
+```bash
+cp data/experience_lake.example.json data/experience_lake.json
+export EXPERIENCE_LAKE_PATH=data/experience_lake.json
+export MIN_MATCH_SCORE=3
+export EXTENSION_API_TOKEN="replace-with-a-long-random-token"
+export ADZUNA_APP_ID="..."        # optional
+export ADZUNA_APP_KEY="..."       # optional
+```
+
+The default API token is unset, so ingestion is disabled until you configure one. Start the local API with `job-agent-api`; it listens on `127.0.0.1:8000`.
 
 ## FastAPI endpoint for Chrome extension URL push
 
@@ -54,3 +71,16 @@ app = build_app(ctx)
 ```
 
 Use header `X-API-Token: <EXTENSION_API_TOKEN>` and `POST /ingest/job-url` with `{"url": "https://..."}`.
+
+## Publish your project
+
+Create an empty repository under your personal GitHub account, review the profile data, then run:
+
+```bash
+git remote add origin https://github.com/<your-user>/<your-repository>.git
+git add .
+git commit -m "Prepare personal job agent for release"
+git push -u origin main
+```
+
+Never commit API keys, browser session data, or your private Experience Lake.

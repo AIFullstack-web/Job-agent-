@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from job_agent.experience.models import ExperienceLake
 from job_agent.rag.index import ExperienceRAGIndex
-from job_agent.schemas.fill_plan import FillPlan, FieldAction
+from job_agent.schemas.fill_plan import FieldAction, FillPlan
 from job_agent.schemas.jobs import ApplicationPackage, JobPosting, MatchAssessment
 
 

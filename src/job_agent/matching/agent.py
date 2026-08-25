@@ -5,7 +5,6 @@ from dataclasses import dataclass
 
 from job_agent.experience.models import ExperienceLake
 
-
 STOPWORDS = {
     "and",
     "the",

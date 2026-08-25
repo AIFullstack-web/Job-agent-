@@ -7,8 +7,8 @@ from job_agent.discovery.engine import DiscoveryEngine
 from job_agent.workflows.graph import build_job_agent_graph
 
 
-def run(query: str = "software engineer") -> dict:
-    config = AgentConfig()
+def run(query: str = "software engineer", config: AgentConfig | None = None) -> dict:
+    config = config or AgentConfig()
     discovery = DiscoveryEngine(
         app_id=config.adzuna_app_id,
         app_key=config.adzuna_app_key,
@@ -22,6 +22,10 @@ def run(query: str = "software engineer") -> dict:
     return graph.invoke({"query": query})
 
 
-if __name__ == "__main__":
+def main() -> None:
     result = run()
     print(json.dumps(result, indent=2, default=str))
+
+
+if __name__ == "__main__":
+    main()

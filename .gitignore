@@ -2,3 +2,10 @@ __pycache__/
 *.py[cod]
 .venv/
 .pytest_cache/
+data/experience_lake.json
+.env
+.env.*
+!.env.example
+build/
+dist/
+*.egg-info/

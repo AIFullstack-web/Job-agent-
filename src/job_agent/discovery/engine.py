@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from collections import deque
 from dataclasses import dataclass, field
+from hashlib import sha256
 
 import httpx
 
@@ -19,6 +20,8 @@ class DiscoveryEngine:
         self.queued_urls.append(url)
 
     def poll(self, query: str, limit: int = 20) -> list[JobPosting]:
+        if limit < 1:
+            raise ValueError("limit must be at least 1")
         jobs: list[JobPosting] = []
         jobs.extend(self._poll_queued_urls())
         if self.app_id and self.app_key:
@@ -31,7 +34,7 @@ class DiscoveryEngine:
             url = self.queued_urls.popleft()
             queued.append(
                 JobPosting(
-                    id=f"ext::{hash(url)}",
+                    id=f"ext::{sha256(url.encode('utf-8')).hexdigest()[:16]}",
                     title="External URL submission",
                     company="Unknown",
                     location="Unknown",
